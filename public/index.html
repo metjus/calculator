@@ -2,126 +2,502 @@
 <html lang="sk">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#101214">
-<meta name="description" content="Interná kalkulačka nákladov a predajnej ceny 3D tlače Meowprint.">
-<title>Meowprint – Kalkulačka 3D tlače</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0B">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Interná kalkulačka nákladov a predajnej ceny 3D tlače meowprint.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kalkulačka">
+<title>meowprint – Kalkulačka 3D tlače</title>
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="48x48 32x32 16x16">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/fonts/geist-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-:root{--bg:#101214;--panel:#191c20;--line:#30353d;--text:#f3f4f5;--muted:#a2a8b1;--accent:#c7f36b;--danger:#ff7777}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% -12%,#293321 0,transparent 34%),var(--bg);color:var(--text);font:15px/1.5 Inter,Segoe UI,Arial,sans-serif}
-.wrap{max-width:1180px;margin:auto;padding:30px 22px 54px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:30px}.brand{display:flex;align-items:center;gap:12px}.mark{width:43px;height:43px;border:1px solid var(--accent);border-radius:13px;display:grid;place-items:center;color:var(--accent);font-weight:800;font-size:21px}.brand strong{font-size:17px;letter-spacing:2px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.7px}.tag{border:1px solid var(--line);color:var(--muted);padding:7px 11px;border-radius:99px;font-size:12px}
-h1{font-size:clamp(27px,4vw,38px);line-height:1.12;margin:0 0 8px;letter-spacing:-1px}.intro{color:var(--muted);margin:0 0 26px}.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(310px,.85fr);gap:20px;align-items:start}.sections{display:grid;gap:15px}.card{background:linear-gradient(145deg,#1b1e22,#17191d);border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:0 10px 30px #0002}.cardhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.cardhead h2{font-size:15px;margin:0;font-weight:650}.num{font-size:11px;color:var(--accent);border:1px solid #465532;border-radius:7px;padding:3px 7px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field label.field-label{display:block;color:var(--muted);font-size:12px;margin:0 0 7px}.field input,.field select{width:100%;background:#111316;border:1px solid #363a42;border-radius:9px;color:var(--text);padding:11px 12px;font:inherit;outline:none;transition:.18s}.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #c7f36b16}.field input:disabled{opacity:.58;cursor:not-allowed}.unit{position:relative}.unit input{padding-right:52px}.unit span{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#858b94;font-size:12px;pointer-events:none}.hint{font-size:11px;color:#858b94;margin-top:5px}.toggleline{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px;margin:0 0 14px}.switch{appearance:none;width:40px;height:23px;background:#41454d;border-radius:20px;position:relative;cursor:pointer;transition:.2s;flex:none}.switch:checked{background:var(--accent)}.switch:before{content:"";position:absolute;width:17px;height:17px;top:3px;left:3px;background:white;border-radius:50%;transition:.2s}.switch:checked:before{left:20px}
-.result{position:sticky;top:18px;background:linear-gradient(160deg,#22271d,#191c1b 60%);border-color:#465238}.eyebrow{color:var(--accent);font-size:11px;letter-spacing:1.6px;text-transform:uppercase}.total{font-size:clamp(40px,5vw,55px);font-weight:750;letter-spacing:-2px;margin:6px 0 0}.per{color:var(--muted);font-size:13px;margin:1px 0 20px}.divider{height:1px;background:var(--line);margin:17px 0}.rows{display:grid;gap:10px}.r{display:flex;justify-content:space-between;gap:12px;font-size:13px}.r span:first-child{color:var(--muted)}.r strong{font-weight:600;font-variant-numeric:tabular-nums;text-align:right}.r.emph{padding-top:10px;border-top:1px solid var(--line);margin-top:2px}.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}.chip{background:#30382a;color:#d5e7bb;padding:6px 9px;border-radius:7px;font-size:11px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.btn{border:1px solid var(--line);background:#25292e;color:var(--text);padding:10px 12px;border-radius:9px;cursor:pointer;font:inherit;font-size:12px}.btn:hover{border-color:#69764f}.btn.primary{background:var(--accent);color:#171a13;border-color:var(--accent);font-weight:700}.error{color:var(--danger);font-size:12px;margin-top:12px;display:none}.note{border:1px solid #66552d;background:#2a2418;color:#e8d4a4;border-radius:10px;padding:11px 12px;font-size:12px;margin-top:15px}.foot{color:#727781;text-align:center;font-size:11px;margin-top:28px}
-.complexity-choice{display:flex;align-items:flex-start;gap:11px;background:#111316;border:1px solid #363a42;border-radius:10px;padding:12px;cursor:pointer}.complexity-choice input{position:absolute;opacity:0;width:1px;height:1px}.checkmark{width:19px;height:19px;border:1px solid #69717b;border-radius:5px;flex:none;margin-top:1px;position:relative}.complexity-choice input:checked+.checkmark{background:var(--accent);border-color:var(--accent)}.complexity-choice input:checked+.checkmark:after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #171a13;border-width:0 2px 2px 0;transform:rotate(45deg)}.complexity-choice:has(input:checked){border-color:var(--accent);background:#20271a}.complexity-choice small{display:block;color:var(--muted);font-size:11px;line-height:1.4;margin-top:4px}
+@font-face{font-family:'Geist';src:url('/fonts/geist-var.woff2') format('woff2');font-weight:400 700;font-display:swap}
+@font-face{font-family:'Geist Mono';src:url('/fonts/geist-mono-var.woff2') format('woff2');font-weight:400 700;font-display:swap}
+@font-face{font-family:'Space Grotesk';src:url('/fonts/space-grotesk-500-latin.woff2') format('woff2');font-weight:500;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Space Grotesk';src:url('/fonts/space-grotesk-500-latin-ext.woff2') format('woff2');font-weight:500;font-display:swap;unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+20A0-20AB,U+20AD-20C0,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Instrument Serif';src:url('/fonts/instrument-serif-italic-latin.woff2') format('woff2');font-style:italic;font-weight:400;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Instrument Serif';src:url('/fonts/instrument-serif-italic-latin-ext.woff2') format('woff2');font-style:italic;font-weight:400;font-display:swap;unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+20A0-20AB,U+20AD-20C0,U+2C60-2C7F,U+A720-A7FF}
+
+/* ---------- meowprint tokeny (z meowprint.sk) ---------- */
+:root{
+  --bg:#0A0A0B;--card:#121214;--field:#1A1A1D;--raise:#232327;--raise2:#2E2E33;
+  --text:#F3F2EE;--muted:#A9A7A1;--dim:#8E8C86;--faint:#807E79;
+  --ring:rgba(255,255,255,.07);--ring2:rgba(255,255,255,.12);--line:rgba(255,255,255,.1);
+  --acc:#FF5A1F;--acc2:#FF8A65;--warn:#FFC266;--err:#FF6B6B;
+  --sans:'Geist','Helvetica Neue',Helvetica,system-ui,sans-serif;
+  --mono:'Geist Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --serif:'Instrument Serif','Times New Roman',Georgia,serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --bar-h:0px;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;min-width:320px;background:var(--bg);color:var(--text);font:400 15px/1.5 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-tap-highlight-color:transparent}
+::selection{background:var(--acc);color:var(--bg)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:4px}
+button{font-family:inherit}
+a{color:inherit;text-decoration:none}
+.serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right)) calc(32px + var(--bar-h) + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+.nav{position:sticky;top:0;z-index:30;background:rgba(10,10,11,.72);-webkit-backdrop-filter:saturate(160%) blur(22px);backdrop-filter:saturate(160%) blur(22px);border-bottom:1px solid rgba(255,255,255,.06);padding-top:env(safe-area-inset-top)}
+.nav-in{max-width:1180px;margin:0 auto;height:56px;padding:0 max(16px,env(safe-area-inset-right)) 0 max(16px,env(safe-area-inset-left));display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text)}
+.brand svg{display:block}
+.wm{font-family:'Space Grotesk',var(--sans);font-weight:500;letter-spacing:.05em;font-size:18px}
+.tag{display:flex;align-items:center;gap:8px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--acc);flex:none}
+.head{padding:28px 0 22px}
+.head h1{margin:10px 0 6px;font-size:clamp(32px,8vw,56px);font-weight:600;line-height:1;letter-spacing:-.045em}
+.head h1 .serif{font-size:1.1em}
+.head p{margin:0;color:var(--muted);font-size:15px;max-width:52ch}
+.layout{display:grid;gap:14px}
+.sections{display:grid;gap:12px;min-width:0}
+
+/* ---------- karty ---------- */
+.card{background:var(--card);border-radius:24px;box-shadow:inset 0 0 0 1px var(--ring);padding:18px}
+.cardhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.cardhead h2{margin:0;font-size:18px;font-weight:600;letter-spacing:-.02em}
+.cardhead .eyebrow{color:var(--acc)}
+.fields{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.field{min-width:0}
+.lbl{display:block;font-size:13px;color:var(--muted);margin:0 0 7px}
+.hint{font-size:12px;line-height:1.45;color:var(--dim);margin-top:6px}
+.unit{position:relative}
+.inp{width:100%;height:52px;border-radius:14px;border:0;background:var(--field);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);color:var(--text);padding:0 64px 0 16px;font:500 16px var(--sans);font-variant-numeric:tabular-nums;outline:none;transition:box-shadow .25s;-webkit-appearance:none;appearance:none}
+.inp:focus{box-shadow:inset 0 0 0 1.5px var(--acc)}
+.inp:disabled{color:var(--muted);background:#151517;cursor:not-allowed}
+.inp[aria-invalid="true"]{box-shadow:inset 0 0 0 1.5px var(--err)}
+.unit>span{position:absolute;right:16px;top:50%;transform:translateY(-50%);font:500 12px var(--mono);letter-spacing:.04em;color:var(--faint);pointer-events:none}
+.static{display:flex;align-items:center;height:52px;padding:0 16px;border-radius:14px;background:#151517;box-shadow:inset 0 0 0 1px var(--ring);color:var(--muted);font:500 14px var(--mono)}
+
+/* stepper pre počet kusov */
+.stepper{display:flex;gap:8px}
+.stepper .unit{flex:1}
+.stepb{width:52px;height:52px;flex:none;border-radius:14px;border:0;background:var(--raise);color:var(--text);font-size:22px;line-height:1;cursor:pointer;transition:background .2s;touch-action:manipulation}
+.stepb:hover{background:var(--raise2)}
+.stepb:active{background:var(--raise2);transform:scale(.97)}
+
+/* segmentový prepínač (príplatok / zľava) */
+.seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--field);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);margin-bottom:8px}
+.segb{flex:1 1 0;min-height:42px;padding:8px 10px;border:0;border-radius:11px;background:transparent;color:var(--muted);font:500 14px/1.2 var(--sans);cursor:pointer;transition:background .3s,color .3s;touch-action:manipulation}
+.segb:hover{color:var(--text)}
+.segb[aria-pressed="true"]{background:var(--text);color:var(--bg)}
+
+/* prepínač */
+.toggleline{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:14px;background:var(--field);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);cursor:pointer;font-size:14px}
+.switch{appearance:none;-webkit-appearance:none;width:46px;height:28px;margin:0;background:var(--raise2);border-radius:99px;position:relative;cursor:pointer;transition:background .25s;flex:none}
+.switch:checked{background:var(--acc)}
+.switch::before{content:"";position:absolute;width:22px;height:22px;top:3px;left:3px;background:var(--text);border-radius:50%;transition:transform .3s var(--ease)}
+.switch:checked::before{transform:translateX(18px);background:#fff}
+
+/* zaškrtávacie pole */
+.choice{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:14px;background:var(--field);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);cursor:pointer;transition:box-shadow .25s,background .25s}
+.choice input{accent-color:var(--acc);width:20px;height:20px;margin:1px 0 0;flex:none}
+.choice b{font-weight:600}
+.choice small{display:block;color:var(--muted);font-size:12px;line-height:1.45;margin-top:3px}
+.choice:has(input:checked){box-shadow:inset 0 0 0 1.5px var(--acc);background:color-mix(in srgb,var(--acc) 7%,var(--field))}
+.choice:has(input:disabled){opacity:.5;cursor:not-allowed}
+.rules{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.rule{padding:9px 4px;border-radius:12px;background:var(--field);box-shadow:inset 0 0 0 1px var(--ring);text-align:center;font-family:var(--mono);transition:background .25s,box-shadow .25s}
+.rule b{display:block;font-size:14px;font-weight:600;color:var(--text)}
+.rule span{display:block;font-size:10px;letter-spacing:.04em;color:var(--dim);margin-top:2px}
+.rule.on{background:color-mix(in srgb,var(--acc) 14%,var(--field));box-shadow:inset 0 0 0 1.5px var(--acc)}
+.rule.on span{color:var(--acc2)}
+
+/* ---------- výsledok ---------- */
+.result{scroll-margin-top:72px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--acc) 45%,transparent);background:radial-gradient(120% 70% at 100% 0%,color-mix(in srgb,var(--acc) 12%,transparent),transparent 60%),var(--card)}
+.total{margin:8px 0 2px;font-size:clamp(44px,12vw,60px);font-weight:600;line-height:1;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.per{color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+.rows{display:grid;margin-top:18px;border-top:1px solid var(--line)}
+.r{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px}
+.r span{color:var(--muted)}
+.r strong{font-weight:500;font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.r.sub span{padding-left:12px;color:var(--dim)}
+.r.emph{border-bottom:0;padding-top:14px}
+.r.emph span{color:var(--text);font-weight:600}
+.r.emph strong{font-size:16px;color:var(--text);font-weight:600}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:7px 10px;border-radius:10px;background:#1C1C20;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);color:var(--text)}
+.msg{display:none;margin-top:14px;padding:12px 14px;border-radius:14px;font-size:13px;line-height:1.45}
+.msg.show{display:block}
+.msg.error{background:color-mix(in srgb,var(--err) 12%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--err) 45%,transparent);color:#FFD0D0}
+.msg.warn{background:color-mix(in srgb,var(--warn) 10%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--warn) 40%,transparent);color:#FFE3B8}
+.actions{display:grid;gap:8px;margin-top:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 22px;border-radius:999px;border:0;font:500 15px/1 var(--sans);letter-spacing:-.01em;cursor:pointer;white-space:nowrap;transition:transform .35s var(--ease),background .3s,color .3s,box-shadow .35s;touch-action:manipulation}
+.btn-acc{background:var(--acc);color:var(--bg)}
+.btn-acc:hover{transform:translateY(-2px);box-shadow:0 14px 40px -12px color-mix(in srgb,var(--acc) 80%,transparent)}
+.btn-ghost{background:rgba(255,255,255,.06);color:var(--text);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.btn-ghost:hover{background:rgba(255,255,255,.11)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.foot{margin-top:28px;text-align:center;color:var(--faint);font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase}
+
+/* ---------- spodná lišta s cenou (mobil) ---------- */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px max(16px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));background:rgba(18,18,20,.86);-webkit-backdrop-filter:saturate(160%) blur(22px);backdrop-filter:saturate(160%) blur(22px);border-top:1px solid rgba(255,255,255,.08);transition:transform .4s var(--ease)}
+.bar.hide{transform:translateY(110%)}
+.bar-total{font-size:24px;font-weight:600;letter-spacing:-.04em;line-height:1.1;font-variant-numeric:tabular-nums}
+.bar-per{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar .btn{height:44px;padding:0 18px;font-size:14px}
+
 .customer-quote{display:none}
-@media(max-width:820px){.layout{grid-template-columns:1fr}.result{position:static}.wrap{padding:22px 15px 40px}}
-@media(max-width:480px){.fields{grid-template-columns:1fr}.card{padding:16px}.tag{display:none}.total{font-size:44px}}
-@media print{@page{size:A4;margin:20mm}body{background:#fff!important;color:#17191c!important}.wrap{max-width:none;padding:0}.top,.wrap>h1,.intro,.layout,.foot{display:none!important}.customer-quote{display:block!important;color:#17191c!important;font-family:Arial,sans-serif;padding:12mm 8mm}.quote-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #222;padding-bottom:18px;margin-bottom:36px}.quote-brand{font-size:25px;font-weight:800;letter-spacing:3px}.quote-caption{font-size:12px;letter-spacing:2px;color:#555}.quote-line{display:flex;justify-content:space-between;gap:20px;padding:16px 0;border-bottom:1px solid #ddd;font-size:15px}.quote-line span{color:#555}.quote-total{display:flex;justify-content:space-between;align-items:center;margin-top:35px;padding-top:20px;border-top:2px solid #222;font-size:20px;font-weight:700}.quote-total strong{font-size:27px}}
+
+/* ---------- väčšie obrazovky ---------- */
+@media (min-width:560px){
+  .fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .field.full{grid-column:1/-1}
+  .card{padding:22px;border-radius:28px}
+  .actions .btn-row{grid-template-columns:1fr 1fr}
+}
+@media (min-width:900px){
+  .wrap{padding-bottom:48px}
+  .head{padding:44px 0 30px}
+  .layout{grid-template-columns:minmax(0,1.4fr) minmax(330px,.9fr);gap:18px;align-items:start}
+  .result{position:sticky;top:76px}
+  .bar{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* ---------- PDF pre zákazníka ---------- */
+@media print{
+  @page{size:A4;margin:16mm}
+  html,body{background:#fff!important;color:#0A0A0B!important}
+  .nav,.wrap>.head,.layout,.foot,.bar{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .customer-quote{display:block!important;font-family:var(--sans);color:#0A0A0B;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .q-head{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:18px;border-bottom:2px solid #0A0A0B}
+  .q-brand{display:flex;align-items:center;gap:10px}
+  .q-brand .wm{font-size:24px}
+  .q-cap{text-align:right;font:500 10px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#55534F;line-height:1.7}
+  .q-title{margin:34px 0 6px;font-size:34px;font-weight:600;letter-spacing:-.04em;line-height:1}
+  .q-title .serif{color:#FF5A1F}
+  .q-sub{margin:0 0 26px;color:#55534F;font-size:13px}
+  .q-line{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid #E2E0DA;font-size:14px}
+  .q-line span{color:#55534F}
+  .q-line strong{font-weight:500;font-variant-numeric:tabular-nums}
+  .q-line[hidden]{display:none!important}
+  .q-total{display:flex;justify-content:space-between;align-items:center;margin-top:26px;padding:18px 20px;border-radius:14px;background:#0A0A0B;color:#F3F2EE}
+  .q-total span{font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#C9C7C1}
+  .q-total strong{font-size:30px;font-weight:600;letter-spacing:-.04em;color:#FF5A1F}
+  .q-per{margin-top:8px;text-align:right;color:#55534F;font-size:12px}
+  .q-foot{margin-top:40px;padding-top:14px;border-top:1px solid #E2E0DA;color:#807E79;font-size:11px;line-height:1.6}
+}
 </style>
 </head>
 <body>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs><path id="mpLogo" d="M15.19 1.04 L15.02 12.12 L0.64 27.36 L14.15 39.66 L7.92 60.44 L18.31 80.01 L15.19 112.74 L6.18 123.83 L27.31 123.83 L29.39 98.89 L22.81 120.54 L12.59 120.54 L20.21 115.34 L24.54 78.28 L14.5 59.58 L20.91 35.5 L4.97 28.06 L23.68 9.7 L33.89 20.78 L36.15 41.39 L62.3 64.08 L75.28 105.47 L89.14 82.78 L76.67 55.77 L91.74 41.04 L81.87 56.28 L94.34 82.61 L69.4 120.71 L36.66 120.71 L44.11 115.17 L35.45 88.84 L39.09 81.57 L52.77 83.47 L35.8 75.68 L29.22 88.67 L38.22 113.09 L30.95 124 L74.94 123.83 L99.36 82.78 L87.41 56.63 L96.41 37.75 L82.56 36.89 L71.65 55.77 L83.42 82.26 L78.06 92.65 L68.18 61.48 L42.21 38.79 L39.44 18.18 L23.5 0 L22.29 6.93ZM12.25 22.5 L12.42 22.34 L17.44 22.34 L17.44 22.51 L13.46 25.63 L12.42 25.63Z"></path></defs></svg>
+
+<header class="nav">
+  <div class="nav-in">
+    <div class="brand"><svg viewBox="0 0 100 124" width="19" height="24" aria-hidden="true"><use href="#mpLogo" fill="currentColor"></use></svg><span class="wm">meowprint</span></div>
+    <div class="tag eyebrow"><span class="dot"></span><span>Interné · EUR</span></div>
+  </div>
+</header>
+
 <div class="wrap">
-<header class="top"><div class="brand"><div class="mark">M</div><div><strong>MEOWPRINT</strong><small>3D PRINT COST CALCULATOR</small></div></div><div class="tag">Interný nástroj · EUR</div></header>
-<h1>Kalkulačka 3D tlače</h1><p class="intro">Vypočítaj predajnú cenu celej zákazky. Výsledok sa aktualizuje automaticky.</p>
+<div class="head">
+  <div class="eyebrow">Kalkulačka 3D tlače</div>
+  <h1>Nacenenie <span class="serif">zákazky.</span></h1>
+  <p>Vyplň údaje o objednávke, cena sa prepočíta hneď. Desatinné čísla môžeš písať s čiarkou aj bodkou.</p>
+</div>
+
 <div class="layout">
 <div class="sections">
-<section class="card"><div class="cardhead"><h2>Objednávka</h2><span class="num">01</span></div><div class="fields">
-<div class="field"><label class="field-label" for="qty">Počet kusov</label><div class="unit"><input id="qty" type="number" min="1" step="1" value="10"><span>ks</span></div></div>
-<div class="field"><label class="field-label" for="minutes">Celkový čas tlače objednávky</label><div class="unit"><input id="minutes" type="number" min="0" step="1" value="1200"><span>min</span></div><div class="hint">Čas všetkých tlačí spolu, nie jedného kusu.</div></div>
-</div></section>
-<section class="card"><div class="cardhead"><h2>Materiál</h2><span class="num">02</span></div><div class="fields">
-<div class="field"><label class="field-label" for="grams">Spotreba filamentu na kus</label><div class="unit"><input id="grams" type="number" min="0" step="0.1" value="10.6"><span>g/ks</span></div></div>
-<div class="field"><label class="field-label" for="priceKg">Cena filamentu</label><div class="unit"><input id="priceKg" type="number" min="0" step="0.01" value="12"><span>€/kg</span></div></div>
-</div></section>
-<section class="card"><div class="cardhead"><h2>Elektrina</h2><span class="num">03</span></div><div class="fields">
-<div class="field"><label class="field-label" for="watts">Priemerný príkon tlačiarne</label><div class="unit"><input id="watts" type="number" min="0" step="1" value="120"><span>W</span></div></div>
-<div class="field"><label class="field-label" for="electricity">Cena elektriny</label><div class="unit"><input id="electricity" type="number" min="0" step="0.01" value="0.20"><span>€/kWh</span></div></div>
-</div></section>
-<section class="card"><div class="cardhead"><h2>Modelovanie + úpravy</h2><span class="num">04</span></div><div class="fields">
-<div class="field"><label class="field-label" for="modelMinutes">Čas práce za celú objednávku</label><div class="unit"><input id="modelMinutes" type="number" min="0" step="1" value="0"><span>min</span></div><div class="hint">Lepenie, brúsenie, montovanie, dokončovanie a ďalšie ručné úpravy.</div></div>
-<div class="field"><label class="field-label" for="hourly">Hodinovka</label><div class="unit"><input id="hourly" type="number" min="0" step="0.5" value="10"><span>€/h</span></div><div class="hint">Orientačne: 5 € jednoduché · 10 € bežné · 15 € náročné.</div></div>
-</div></section>
-<section class="card"><div class="cardhead"><h2>Yield a ostatné náklady</h2><span class="num">05</span></div><div class="fields">
-<div class="field"><label class="field-label" for="yield">Yield – úspešnosť výroby</label><div class="unit"><input id="yield" type="number" min="0.01" max="100" step="1" value="85"><span>%</span></div></div>
-<div class="field"><label class="field-label" for="packing">Balenie a príprava objednávky</label><div class="unit"><input id="packing" type="number" min="0" step="0.1" value="0"><span>€</span></div></div>
-<div class="field"><label class="field-label">Opotrebenie tlačiarne</label><div class="unit"><input value="0,10 € / hodina tlače" disabled><span></span></div><div class="hint">Automaticky podľa celkového času tlače. Bez ručnej úpravy.</div></div>
-<div class="field"><label class="field-label" for="adjustment">Dodatočná úprava ceny</label><div class="unit"><input id="adjustment" type="number" step="0.1" value="0"><span>€</span></div><div class="hint">Kladná hodnota = príplatok, záporná = zľava.</div></div>
-</div></section>
-<section class="card"><div class="cardhead"><h2>Marža a cenotvorba</h2><span class="num">06</span></div>
-<div class="toggleline"><span>Automatický násobok podľa množstva</span><input id="auto" class="switch" type="checkbox" checked aria-label="Automatický násobok"></div>
-<div class="fields">
-<div class="field"><label class="field-label">Náročnosť zákazky</label><label class="complexity-choice"><input id="complexity" type="checkbox"><span class="checkmark"></span><span><b>Zložitá zákazka</b><small>Viac dielov, náročná geometria, podporné štruktúry alebo vyššie riziko nepodarkov (+0,3×).</small></span></label><div class="hint">Nezaškrtnuté = jednoduchá / štandardná zákazka. Modelovanie a ručné úpravy sa účtujú samostatne.</div></div>
-<div class="field"><label class="field-label" for="multiplier">Násobok</label><div class="unit"><input id="multiplier" type="number" min="0" step="0.1" value="2.5"><span>×</span></div><div class="hint" id="multHint">Určuje sa automaticky podľa množstva a náročnosti.</div></div>
-<div class="field"><label class="field-label">Pravidlá automatického násobku</label><div class="hint" style="font-size:12px;line-height:1.8">1–5 ks: 3,0×<br>6–20 ks: 2,5×<br>21–50 ks: 2,2×<br>51–100 ks: 1,9×<br>101+ ks: 1,7×<br><br>Zložitá zákazka: +0,3×</div></div>
-</div></section>
+
+<section class="card" aria-labelledby="h-obj">
+  <div class="cardhead"><h2 id="h-obj">Objednávka</h2><span class="eyebrow">(01)</span></div>
+  <div class="fields">
+    <div class="field"><label class="lbl" for="qty">Počet kusov</label>
+      <div class="stepper"><button class="stepb" type="button" data-step="-1" aria-label="Menej kusov">−</button><div class="unit"><input class="inp" id="qty" inputmode="numeric" autocomplete="off" enterkeyhint="next"><span>ks</span></div><button class="stepb" type="button" data-step="1" aria-label="Viac kusov">+</button></div></div>
+    <div class="field"><label class="lbl" for="minutes">Celkový čas tlače</label>
+      <div class="unit"><input class="inp" id="minutes" inputmode="decimal" autocomplete="off" enterkeyhint="next"><span>min</span></div>
+      <div class="hint">Čas všetkých tlačí spolu, nie jedného kusu. <span id="minutesHint"></span></div></div>
+  </div>
+</section>
+
+<section class="card" aria-labelledby="h-mat">
+  <div class="cardhead"><h2 id="h-mat">Materiál</h2><span class="eyebrow">(02)</span></div>
+  <div class="fields">
+    <div class="field"><label class="lbl" for="grams">Filament na 1 kus</label><div class="unit"><input class="inp" id="grams" inputmode="decimal" autocomplete="off" enterkeyhint="next"><span>g/ks</span></div></div>
+    <div class="field"><label class="lbl" for="priceKg">Cena filamentu</label><div class="unit"><input class="inp" id="priceKg" inputmode="decimal" autocomplete="off" enterkeyhint="next"><span>€/kg</span></div></div>
+  </div>
+</section>
+
+<section class="card" aria-labelledby="h-el">
+  <div class="cardhead"><h2 id="h-el">Elektrina</h2><span class="eyebrow">(03)</span></div>
+  <div class="fields">
+    <div class="field"><label class="lbl" for="watts">Priemerný príkon tlačiarne</label><div class="unit"><input class="inp" id="watts" inputmode="decimal" autocomplete="off" enterkeyhint="next"><span>W</span></div></div>
+    <div class="field"><label class="lbl" for="electricity">Cena elektriny</label><div class="unit"><input class="inp" id="electricity" inputmode="decimal" autocomplete="off" enterkeyhint="next"><span>€/kWh</span></div></div>
+  </div>
+</section>
+
+<section class="card" aria-labelledby="h-lab">
+  <div class="cardhead"><h2 id="h-lab">Modelovanie + úpravy</h2><span class="eyebrow">(04)</span></div>
+  <div class="fields">
+    <div class="field"><label class="lbl" for="modelMinutes">Čas práce za celú objednávku</label><div class="unit"><input class="inp" id="modelMinutes" inputmode="decimal" autocomplete="off" enterkeyhint="next" placeholder="0"><span>min</span></div><div class="hint">Modelovanie, lepenie, brúsenie, montáž, dokončovanie.</div></div>
+    <div class="field"><label class="lbl" for="hourly">Hodinovka</label><div class="unit"><input class="inp" id="hourly" inputmode="decimal" autocomplete="off" enterkeyhint="next"><span>€/h</span></div><div class="hint">Orientačne 5 € jednoduché · 10 € bežné · 15 € náročné.</div></div>
+  </div>
+</section>
+
+<section class="card" aria-labelledby="h-oth">
+  <div class="cardhead"><h2 id="h-oth">Yield a ostatné</h2><span class="eyebrow">(05)</span></div>
+  <div class="fields">
+    <div class="field"><label class="lbl" for="yield">Yield – úspešnosť výroby</label><div class="unit"><input class="inp" id="yield" inputmode="decimal" autocomplete="off" enterkeyhint="next"><span>%</span></div><div class="hint">Navýši len materiál + elektrinu.</div></div>
+    <div class="field"><label class="lbl" for="packing">Balenie a príprava</label><div class="unit"><input class="inp" id="packing" inputmode="decimal" autocomplete="off" enterkeyhint="next" placeholder="0"><span>€</span></div></div>
+    <div class="field"><span class="lbl">Opotrebenie tlačiarne</span><div class="static">0,10 € / hodina tlače</div><div class="hint">Počíta sa automaticky z času tlače.</div></div>
+    <div class="field"><span class="lbl" id="adjLbl">Dodatočná úprava ceny</span>
+      <div class="seg" role="group" aria-labelledby="adjLbl"><button class="segb" type="button" id="adjPlus" aria-pressed="true">Príplatok</button><button class="segb" type="button" id="adjMinus" aria-pressed="false">Zľava</button></div>
+      <div class="unit"><input class="inp" id="adjustment" inputmode="decimal" autocomplete="off" enterkeyhint="done" placeholder="0" aria-labelledby="adjLbl"><span>€</span></div></div>
+  </div>
+</section>
+
+<section class="card" aria-labelledby="h-mult">
+  <div class="cardhead"><h2 id="h-mult">Marža a násobok</h2><span class="eyebrow">(06)</span></div>
+  <div class="fields">
+    <label class="toggleline field full" for="auto"><span>Automatický násobok podľa množstva</span><input id="auto" class="switch" type="checkbox" role="switch" checked></label>
+    <div class="field full"><div class="rules" id="rules" aria-label="Pravidlá automatického násobku">
+      <div class="rule" data-max="5"><b>3,0×</b><span>1–5 ks</span></div>
+      <div class="rule" data-max="20"><b>2,5×</b><span>6–20</span></div>
+      <div class="rule" data-max="50"><b>2,2×</b><span>21–50</span></div>
+      <div class="rule" data-max="100"><b>1,9×</b><span>51–100</span></div>
+      <div class="rule" data-max="Infinity"><b>1,7×</b><span>101+</span></div>
+    </div></div>
+    <label class="choice field full"><input id="complexity" type="checkbox"><span><b>Zložitá zákazka (+0,3×)</b><small id="complexityHint">Viac dielov, náročná geometria, podpory alebo vyššie riziko nepodarkov.</small></span></label>
+    <div class="field full"><label class="lbl" for="multiplier">Násobok</label><div class="unit"><input class="inp" id="multiplier" inputmode="decimal" autocomplete="off" enterkeyhint="done"><span>×</span></div><div class="hint" id="multHint"></div></div>
+  </div>
+</section>
 </div>
-<aside class="card result">
-<div class="eyebrow">Predajná cena objednávky</div><div class="total" id="total">–</div><div class="per" id="per">–</div><div class="divider"></div>
-<div class="rows">
-<div class="r"><span>Celková spotreba filamentu</span><strong id="totalGrams">–</strong></div><div class="r"><span>Materiál</span><strong id="material">–</strong></div><div class="r"><span>Čas tlače</span><strong id="time">–</strong></div><div class="r"><span>Elektrina</span><strong id="power">–</strong></div><div class="r"><span>Materiál + elektrina</span><strong id="raw">–</strong></div><div class="r"><span>Výrobné náklady s yieldom</span><strong id="yielded">–</strong></div><div class="r"><span>Použitý násobok</span><strong id="usedMult">–</strong></div><div class="r"><span>Výroba po násobku</span><strong id="production">–</strong></div><div class="r"><span>Modelovanie + úpravy</span><strong id="labor">–</strong></div><div class="r"><span>Balenie</span><strong id="packingOut">–</strong></div><div class="r"><span>Opotrebenie tlačiarne (0,10 €/h)</span><strong id="wearOut">–</strong></div><div class="r"><span>Príplatok / zľava</span><strong id="adjustOut">–</strong></div><div class="r emph"><span>Spolu za objednávku</span><strong id="total2">–</strong></div>
-</div>
-<div class="meta"><span class="chip" id="yieldChip">Yield 85 %</span><span class="chip" id="multChip">Násobok –</span></div><div class="error" id="error" role="alert"></div>
-<div class="note">Kontrolný príklad zo zadania: presný výsledok je 5,15294 €, takže matematické zaokrúhlenie na centy dáva 5,15 €, nie 5,16 €.</div>
-<div class="actions"><button class="btn" id="reset" type="button">Obnoviť predvolené</button><button class="btn" id="copy" type="button">Kopírovať interný súhrn</button><button class="btn primary" id="export" type="button">Export pre zákazníka · PDF</button></div>
+
+<aside class="card result" id="result" aria-labelledby="h-res">
+  <div class="eyebrow" id="h-res">Predajná cena objednávky</div>
+  <div class="total" id="total" aria-live="polite">–</div>
+  <div class="per" id="per">–</div>
+  <div class="meta"><span class="chip" id="yieldChip">Yield –</span><span class="chip" id="multChip">Násobok –</span></div>
+  <div class="msg error" id="error" role="alert"></div>
+  <div class="msg warn" id="warn" role="status"></div>
+  <div class="rows">
+    <div class="r"><span>Spotreba filamentu</span><strong id="totalGrams">–</strong></div>
+    <div class="r"><span>Čas tlače</span><strong id="time">–</strong></div>
+    <div class="r"><span>Materiál</span><strong id="material">–</strong></div>
+    <div class="r"><span>Elektrina</span><strong id="power">–</strong></div>
+    <div class="r"><span>Náklady s yieldom</span><strong id="yielded">–</strong></div>
+    <div class="r"><span>Výroba po násobku</span><strong id="production">–</strong></div>
+    <div class="r"><span>Modelovanie + úpravy</span><strong id="labor">–</strong></div>
+    <div class="r"><span>Opotrebenie tlačiarne</span><strong id="wearOut">–</strong></div>
+    <div class="r"><span>Balenie</span><strong id="packingOut">–</strong></div>
+    <div class="r"><span id="adjustLbl">Príplatok / zľava</span><strong id="adjustOut">–</strong></div>
+    <div class="r emph"><span>Spolu za objednávku</span><strong id="total2">–</strong></div>
+    <div class="r sub"><span>z toho marža na výrobe</span><strong id="profit">–</strong></div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-acc" id="export" type="button">Export pre zákazníka · PDF</button>
+    <div class="btn-row"><button class="btn btn-ghost" id="copy" type="button">Kopírovať súhrn</button><button class="btn btn-ghost" id="reset" type="button">Predvolené</button></div>
+  </div>
 </aside>
 </div>
-<section id="customerQuote" class="customer-quote"><header class="quote-head"><div class="quote-brand">MEOWPRINT</div><div class="quote-caption">CENOVÁ PONUKA</div></header><div class="quote-line"><span>Celkový čas tlače</span><strong id="qTime">–</strong></div><div class="quote-line"><span>Použitý filament</span><strong id="qFilament">–</strong></div><div class="quote-line"><span>Modelovanie + úpravy</span><strong id="qLabor">–</strong></div><div class="quote-line"><span>Balenie</span><strong id="qPacking">–</strong></div><div class="quote-line"><span>Príplatok / zľava</span><strong id="qAdjustment">–</strong></div><div class="quote-total"><span>Celková cena</span><strong id="qTotal">–</strong></div></section>
-<div class="foot">MEOWPRINT · Interná kalkulačka · Výpočty v EUR</div>
+
+<section id="customerQuote" class="customer-quote" aria-hidden="true">
+  <header class="q-head">
+    <div class="q-brand"><svg viewBox="0 0 100 124" width="24" height="30" aria-hidden="true"><use href="#mpLogo" fill="#0A0A0B"></use></svg><span class="wm">meowprint</span></div>
+    <div class="q-cap">Cenová ponuka<br><span id="qDate">–</span></div>
+  </header>
+  <h1 class="q-title">Cenová <span class="serif">ponuka.</span></h1>
+  <p class="q-sub">3D tlač na objednávku · meowprint.sk</p>
+  <div class="q-line"><span>Počet kusov</span><strong id="qQty">–</strong></div>
+  <div class="q-line"><span>Celkový čas tlače</span><strong id="qTime">–</strong></div>
+  <div class="q-line"><span>Použitý filament</span><strong id="qFilament">–</strong></div>
+  <div class="q-line" id="qLaborLine"><span>Modelovanie + úpravy</span><strong id="qLabor">–</strong></div>
+  <div class="q-line" id="qPackingLine"><span>Balenie</span><strong id="qPacking">–</strong></div>
+  <div class="q-line" id="qAdjustmentLine"><span id="qAdjustmentLbl">Príplatok / zľava</span><strong id="qAdjustment">–</strong></div>
+  <div class="q-total"><span>Celková cena</span><strong id="qTotal">–</strong></div>
+  <div class="q-per" id="qPer">–</div>
+  <div class="q-foot">Cena je uvedená v EUR. Ponuka je orientačná a platí po potvrdení zadania.</div>
+</section>
+
+<div class="foot">meowprint · interná kalkulačka</div>
 </div>
+
+<div class="bar" id="bar">
+  <div><div class="bar-total" id="barTotal">–</div><div class="bar-per" id="barPer">–</div></div>
+  <a class="btn btn-ghost" href="#result" id="barBtn">Rozpis</a>
+</div>
+
 <script>
 'use strict';
-const ids=['qty','minutes','grams','priceKg','watts','electricity','modelMinutes','hourly','yield','packing','adjustment','multiplier'];
 const $=id=>document.getElementById(id);
-const defaults={qty:10,minutes:1200,grams:10.6,priceKg:12,watts:120,electricity:.2,modelMinutes:0,hourly:10,yield:85,packing:0,adjustment:0,multiplier:2.5,auto:true,complexity:false};
-const money=n=>new Intl.NumberFormat('sk-SK',{style:'currency',currency:'EUR'}).format(n);
-const number=n=>new Intl.NumberFormat('sk-SK',{maximumFractionDigits:2}).format(n);
-const roundCent=n=>Math.round((n+Number.EPSILON)*100)/100;
-const fmt=n=>money(roundCent(n));
-function autoMult(q,complex){const base=q<=5?3:q<=20?2.5:q<=50?2.2:q<=100?1.9:1.7;return base+(complex?0.3:0)}
-function setText(id,value){$(id).textContent=value}
-function calc(){
- const v={};for(const id of ids)v[id]=Number($(id).value);
- const errors=[];
- if(ids.some(id=>!Number.isFinite(v[id])))errors.push('Skontroluj číselné vstupy.');
- if(!Number.isInteger(v.qty)||v.qty<1)errors.push('Počet kusov musí byť celé číslo väčšie ako 0.');
- if(v.minutes<0||v.grams<0||v.priceKg<0||v.watts<0||v.electricity<0||v.modelMinutes<0||v.hourly<0||v.packing<0)errors.push('Náklady, spotreba a časy nesmú byť záporné.');
- if(v.yield<=0||v.yield>100)errors.push('Yield musí byť väčší ako 0 % a najviac 100 %.');
- if(v.multiplier<0)errors.push('Násobok nesmie byť záporný.');
- const err=$('error');
- if(errors.length){err.style.display='block';err.textContent=[...new Set(errors)].join(' ');return false}
- const material=v.qty*v.grams*v.priceKg/1000;
- const hours=v.minutes/60;
- const power=hours*(v.watts/1000)*v.electricity;
- const raw=material+power;
- const yielded=raw/(v.yield/100);
- const mult=$('auto').checked?autoMult(v.qty,$('complexity').checked):v.multiplier;
- const production=yielded*mult;
- const labor=(v.modelMinutes/60)*v.hourly;
- const wear=hours*0.10;
- const total=production+labor+v.packing+wear+v.adjustment;
- if(total<0){err.style.display='block';err.textContent='Výsledná cena nemôže byť záporná. Zníž zľavu alebo uprav vstupy.';return false}
- err.style.display='none';
- setText('total',fmt(total));setText('total2',fmt(total));setText('per',fmt(total/v.qty)+' / kus · '+v.qty+' kusov');
- setText('totalGrams',number(v.qty*v.grams)+' g');setText('material',fmt(material));
- setText('time',Math.floor(hours)+' h '+String(Math.round((hours%1)*60)).padStart(2,'0')+' min');
- setText('power',fmt(power));setText('raw',fmt(raw));setText('yielded',fmt(yielded));setText('usedMult',number(mult)+'×');setText('production',fmt(production));
- setText('labor',fmt(labor));setText('packingOut',fmt(v.packing));setText('wearOut',fmt(wear));setText('adjustOut',fmt(v.adjustment));
- setText('yieldChip','Yield '+number(v.yield)+' %');setText('multChip','Násobok '+number(mult)+'×');
- $('multiplier').disabled=$('auto').checked;
- setText('multHint',$('auto').checked?'Určuje sa automaticky podľa množstva a náročnosti.':'Používa sa tvoj manuálne zadaný násobok.');
- const totalGrams=v.qty*v.grams;
- setText('qTime',Math.floor(hours)+' h '+String(Math.round((hours%1)*60)).padStart(2,'0')+' min');
- setText('qFilament',number(totalGrams)+' g');setText('qLabor',number(v.modelMinutes)+' min · '+fmt(labor));setText('qPacking',fmt(v.packing));
- setText('qAdjustment',(v.adjustment>0?'+':'')+fmt(v.adjustment));setText('qTotal',fmt(total));
- window.lastSummary=`MEOWPRINT – Interný súhrn\nPočet kusov: ${v.qty}\nCelkový čas tlače: ${number(v.minutes)} min\nSpotreba filamentu: ${number(totalGrams)} g\nMateriál: ${fmt(material)}\nElektrina: ${fmt(power)}\nYield: ${number(v.yield)} %\nVýrobné náklady s yieldom: ${fmt(yielded)}\nNáročnosť: ${$('complexity').checked?'zložitá':'jednoduchá / štandardná'}\nNásobok: ${number(mult)}×\nModelovanie + úpravy: ${number(v.modelMinutes)} min · ${fmt(labor)}\nBalenie: ${fmt(v.packing)}\nOpotrebenie tlačiarne: ${fmt(wear)}\nPríplatok / zľava: ${fmt(v.adjustment)}\nCELKOM: ${fmt(total)}\nCena za kus: ${fmt(total/v.qty)}`;
- return true;
+const FIELDS=['qty','minutes','grams','priceKg','watts','electricity','modelMinutes','hourly','yield','packing','adjustment','multiplier'];
+// Polia, ktoré môžu ostať prázdne (= 0).
+const OPTIONAL=new Set(['modelMinutes','packing','adjustment']);
+const LABELS={qty:'Počet kusov',minutes:'Čas tlače',grams:'Filament na kus',priceKg:'Cena filamentu',watts:'Príkon',electricity:'Cena elektriny',modelMinutes:'Čas práce',hourly:'Hodinovka',yield:'Yield',packing:'Balenie',adjustment:'Úprava ceny',multiplier:'Násobok'};
+const DEFAULTS={qty:'10',minutes:'1200',grams:'10,6',priceKg:'12',watts:'120',electricity:'0,20',modelMinutes:'',hourly:'10',yield:'85',packing:'',adjustment:'',multiplier:'2,5',auto:true,complexity:false,discount:false};
+const WEAR_PER_HOUR=0.10;
+const STORE='mp-kalkulacka-v2';
+
+const nf2=new Intl.NumberFormat('sk-SK',{maximumFractionDigits:2});
+const nfEur=new Intl.NumberFormat('sk-SK',{style:'currency',currency:'EUR'});
+// Zaokrúhlenie na centy "polovica nahor" bez chýb binárnych desatinných čísel (1.005 → 1.01).
+function roundCent(n){const s=n<0?-1:1;return s*Math.round(Number((Math.abs(n)*100).toPrecision(12)))/100}
+const fmt=n=>nfEur.format(roundCent(n)+0);
+const num=n=>nf2.format(n);
+// Akceptuje "10,6", "10.6", " 1 200 " → číslo; prázdne → null; nezmysel → NaN.
+function parseNum(str){
+  const s=String(str).replace(/[\s ]/g,'').replace(',','.');
+  if(s==='')return null;
+  return /^[+-]?(\d+\.?\d*|\.\d+)$/.test(s)?Number(s):NaN;
 }
-ids.forEach(id=>$(id).addEventListener('input',calc));
-$('auto').addEventListener('change',calc);$('complexity').addEventListener('change',calc);
-$('reset').addEventListener('click',()=>{for(const [k,v] of Object.entries(defaults)){if(k==='auto'||k==='complexity')$(k).checked=v;else $(k).value=v}calc()});
-$('copy').addEventListener('click',async()=>{if(!calc())return;try{await navigator.clipboard.writeText(window.lastSummary);$('copy').textContent='Skopírované';setTimeout(()=>$('copy').textContent='Kopírovať interný súhrn',1500)}catch(e){$('copy').textContent='Schránka nedostupná';setTimeout(()=>$('copy').textContent='Kopírovať interný súhrn',1500)}});
+function autoMult(q,complex){const base=q<=5?3:q<=20?2.5:q<=50?2.2:q<=100?1.9:1.7;return Math.round((base+(complex?0.3:0))*10)/10}
+function fmtTime(min){const m=Math.round(min);return Math.floor(m/60)+' h '+String(m%60).padStart(2,'0')+' min'}
+function setText(id,v){$(id).textContent=v}
+let discount=false;
+const OUT=['total','total2','per','totalGrams','time','material','power','yielded','production','labor','wearOut','packingOut','adjustOut','profit','barTotal','barPer'];
+
+function read(){
+  const v={},bad=[];
+  for(const id of FIELDS){
+    const el=$(id);let x=parseNum(el.value);
+    if(id==='multiplier'&&$('auto').checked){v[id]=0;el.removeAttribute('aria-invalid');continue}
+    if(x===null&&OPTIONAL.has(id))x=0;
+    const ok=x!==null&&Number.isFinite(x);
+    el.setAttribute('aria-invalid',ok?'false':'true');
+    if(!ok)bad.push(LABELS[id]);
+    v[id]=x;
+  }
+  return {v,bad};
+}
+
+function calc(){
+  const {v,bad}=read();
+  const errors=[],warns=[];
+  if(bad.length)errors.push('Vyplň platné číslo: '+bad.join(', ')+'.');
+  else{
+    if(!Number.isInteger(v.qty)||v.qty<1)errors.push('Počet kusov musí byť celé číslo aspoň 1.');
+    const neg=['minutes','grams','priceKg','watts','electricity','modelMinutes','hourly','packing','adjustment'].filter(k=>v[k]<0);
+    if(neg.length)errors.push('Záporné hodnoty nie sú povolené ('+neg.map(k=>LABELS[k]).join(', ')+'). Zľavu nastav prepínačom.');
+    if(v.yield<=0||v.yield>100)errors.push('Yield musí byť viac ako 0 % a najviac 100 %.');
+    if(!$('auto').checked&&v.multiplier<=0)errors.push('Násobok musí byť väčší ako 0.');
+  }
+  const auto=$('auto').checked;
+  $('complexity').disabled=!auto;
+  setText('complexityHint',auto?'Viac dielov, náročná geometria, podpory alebo vyššie riziko nepodarkov.':'Pri manuálnom násobku sa nepoužíva – zahrň ho do svojho násobku.');
+  $('multiplier').disabled=auto;
+  setText('multHint',auto?'Určuje sa automaticky podľa počtu kusov a náročnosti.':'Používa sa tvoj manuálny násobok.');
+
+  // Zvýraznenie aktívneho pásma
+  const q=Number.isInteger(v.qty)&&v.qty>0?v.qty:null;
+  document.querySelectorAll('.rule').forEach((r,i,all)=>{const max=Number(r.dataset.max),min=i?Number(all[i-1].dataset.max):0;r.classList.toggle('on',auto&&q!==null&&q>min&&q<=max)});
+  setText('minutesHint',Number.isFinite(v.minutes)&&v.minutes>0?'= '+fmtTime(v.minutes)+'.':'');
+
+  let total=NaN,adj=0;
+  if(!errors.length){
+    adj=discount?-v.adjustment:v.adjustment;
+    var material=v.qty*v.grams*v.priceKg/1000,
+        hours=v.minutes/60,
+        power=hours*(v.watts/1000)*v.electricity,
+        raw=material+power,
+        yielded=raw/(v.yield/100),
+        mult=auto?autoMult(v.qty,$('complexity').checked):v.multiplier,
+        production=yielded*mult,
+        labor=(v.modelMinutes/60)*v.hourly,
+        wear=hours*WEAR_PER_HOUR;
+    total=production+labor+wear+v.packing+adj;
+    if(roundCent(total)<0)errors.push('Výsledná cena je záporná. Zníž zľavu alebo uprav vstupy.');
+    if(!auto&&v.multiplier<1)warns.push('Násobok pod 1× znamená predaj výroby pod nákladmi.');
+    if(v.minutes===0&&v.qty>0)warns.push('Čas tlače je 0 – elektrina a opotrebenie sa nezapočítajú.');
+  }
+
+  const err=$('error'),warn=$('warn');
+  err.textContent=errors.join(' ');err.classList.toggle('show',errors.length>0);
+  warn.textContent=errors.length?'':warns.join(' ');warn.classList.toggle('show',!errors.length&&warns.length>0);
+  $('export').disabled=$('copy').disabled=errors.length>0;
+  save();
+
+  if(errors.length){
+    // Nezobrazuj staré (neplatné) čísla.
+    OUT.forEach(id=>setText(id,'–'));setText('barPer','Skontroluj vstupy');setText('multChip','Násobok –');setText('yieldChip','Yield –');
+    window.lastSummary='';return false;
+  }
+
+  const per=fmt(total/v.qty)+' / ks · '+v.qty+' ks';
+  const margin=production-yielded;
+  setText('total',fmt(total));setText('total2',fmt(total));setText('per',per);
+  setText('barTotal',fmt(total));setText('barPer',per);
+  setText('totalGrams',num(v.qty*v.grams)+' g');setText('time',fmtTime(v.minutes));
+  setText('material',fmt(material));setText('power',fmt(power));setText('yielded',fmt(yielded));
+  setText('production',fmt(production));setText('labor',fmt(labor));setText('wearOut',fmt(wear));
+  setText('packingOut',fmt(v.packing));
+  setText('adjustLbl',adj<0?'Zľava':adj>0?'Príplatok':'Príplatok / zľava');setText('adjustOut',(adj>0?'+':'')+fmt(adj));
+  setText('profit',fmt(margin));
+  setText('yieldChip','Yield '+num(v.yield)+' %');setText('multChip','Násobok '+num(mult)+'×');
+
+  // Zákaznícka ponuka (PDF)
+  const totalGrams=v.qty*v.grams;
+  setText('qDate',new Date().toLocaleDateString('sk-SK'));
+  setText('qQty',v.qty+' ks');setText('qTime',fmtTime(v.minutes));setText('qFilament',num(totalGrams)+' g');
+  setText('qLabor',num(v.modelMinutes)+' min · '+fmt(labor));$('qLaborLine').hidden=!(labor>0);
+  setText('qPacking',fmt(v.packing));$('qPackingLine').hidden=!(v.packing>0);
+  setText('qAdjustmentLbl',adj<0?'Zľava':'Príplatok');setText('qAdjustment',(adj>0?'+':'')+fmt(adj));$('qAdjustmentLine').hidden=adj===0;
+  setText('qTotal',fmt(total));setText('qPer',fmt(total/v.qty)+' / kus');
+
+  window.lastSummary=[
+    'MEOWPRINT – interný súhrn',
+    'Počet kusov: '+v.qty,
+    'Čas tlače: '+fmtTime(v.minutes)+' ('+num(v.minutes)+' min)',
+    'Filament: '+num(totalGrams)+' g',
+    'Materiál: '+fmt(material),
+    'Elektrina: '+fmt(power),
+    'Yield: '+num(v.yield)+' %',
+    'Náklady s yieldom: '+fmt(yielded),
+    'Náročnosť: '+(auto?($('complexity').checked?'zložitá':'štandardná'):'– (manuálny násobok)'),
+    'Násobok: '+num(mult)+'× ('+(auto?'automatický':'manuálny')+')',
+    'Výroba po násobku: '+fmt(production),
+    'Modelovanie + úpravy: '+num(v.modelMinutes)+' min · '+fmt(labor),
+    'Opotrebenie tlačiarne: '+fmt(wear),
+    'Balenie: '+fmt(v.packing),
+    (adj<0?'Zľava: ':'Príplatok: ')+fmt(adj),
+    'CELKOM: '+fmt(total),
+    'Cena za kus: '+fmt(total/v.qty),
+  ].join('\n');
+  return true;
+}
+
+// ---------- uloženie rozpracovanej zákazky (len v tomto prehliadači) ----------
+function save(){try{const s={auto:$('auto').checked,complexity:$('complexity').checked,discount};FIELDS.forEach(id=>s[id]=$(id).value);localStorage.setItem(STORE,JSON.stringify(s))}catch(e){}}
+function load(){let s=null;try{s=JSON.parse(localStorage.getItem(STORE)||'null')}catch(e){}apply(Object.assign({},DEFAULTS,s||{}))}
+function apply(s){FIELDS.forEach(id=>$(id).value=s[id]??'');$('auto').checked=!!s.auto;$('complexity').checked=!!s.complexity;setDiscount(!!s.discount)}
+function setDiscount(on){discount=on;$('adjPlus').setAttribute('aria-pressed',String(!on));$('adjMinus').setAttribute('aria-pressed',String(on))}
+
+// Pri prepnutí na manuálny násobok predvyplň aktuálny automatický.
+function syncMultField(){if($('auto').checked){const q=parseNum($('qty').value);$('multiplier').value=Number.isInteger(q)&&q>0?num(autoMult(q,$('complexity').checked)):''}}
+
+FIELDS.forEach(id=>$(id).addEventListener('input',()=>{if(id==='qty')syncMultField();calc()}));
+$('auto').addEventListener('change',()=>{syncMultField();calc()});
+$('complexity').addEventListener('change',()=>{syncMultField();calc()});
+$('adjPlus').addEventListener('click',()=>{setDiscount(false);calc()});
+$('adjMinus').addEventListener('click',()=>{setDiscount(true);calc()});
+document.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>{const q=parseNum($('qty').value);const cur=Number.isInteger(q)?q:1;$('qty').value=Math.max(1,cur+Number(b.dataset.step));syncMultField();calc()}));
+$('reset').addEventListener('click',()=>{if(!confirm('Vrátiť všetky polia na predvolené hodnoty?'))return;apply(DEFAULTS);syncMultField();calc()});
+$('copy').addEventListener('click',async()=>{if(!calc())return;const b=$('copy');try{await navigator.clipboard.writeText(window.lastSummary);b.textContent='Skopírované'}catch(e){b.textContent='Schránka nedostupná'}setTimeout(()=>b.textContent='Kopírovať súhrn',1500)});
 $('export').addEventListener('click',()=>{if(calc())window.print()});
-calc();
+$('barBtn').addEventListener('click',e=>{e.preventDefault();$('result').scrollIntoView({behavior:'smooth',block:'start'})});
+
+// Spodná lišta: skry, keď je výsledok na obrazovke; nech nezakrýva posledné polia.
+const bar=$('bar');
+function barHeight(){document.documentElement.style.setProperty('--bar-h',getComputedStyle(bar).display==='none'?'0px':bar.offsetHeight+'px')}
+if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>bar.classList.toggle('hide',e.isIntersecting)),{threshold:.15}).observe($('result'));
+addEventListener('resize',barHeight);
+
+load();syncMultField();calc();barHeight();
 </script>
 </body>
 </html>
