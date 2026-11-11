@@ -19,7 +19,7 @@ NAJRÝCHLEJŠIE NASADENIE CEZ WRANGLER
 8. Wrangler vypíše adresu Workeru na workers.dev.
 
 PRIPOJENIE VLASTNEJ DOMÉNY
-V Cloudflare Dashboard otvor Workers & Pages → meowprint-kalkulacka → Settings → Domains & Routes a pridaj doménu alebo subdoménu. DNS a doména musia byť v danom Cloudflare účte.
+V Cloudflare Dashboard otvor Workers & Pages → calculator → Settings → Domains & Routes a pridaj doménu alebo subdoménu. DNS a doména musia byť v danom Cloudflare účte.
 
 AKO SA KALKULAČKA POČÍTA
 - Materiál = počet kusov × gramy na kus × €/kg / 1000.
