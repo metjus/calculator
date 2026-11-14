@@ -23,7 +23,8 @@ V Cloudflare Dashboard otvor Workers & Pages → calculator → Settings → Dom
 
 AKO SA KALKULAČKA POČÍTA
 - Materiál = počet kusov × gramy na kus × €/kg / 1000.
-- Elektrina = čas tlače v hodinách × príkon v kW × cena kWh.
+- Čas tlače sa zadáva za 1 kus v minútach; celkový čas = čas 1 kusu × počet kusov.
+- Elektrina = celkový čas tlače v hodinách × príkon v kW × cena kWh.
 - Yield sa aplikuje len na materiál + elektrinu.
 - Automatický násobok podľa množstva: 1–5 ks 3,0×; 6–20 ks 2,5×; 21–50 ks 2,2×; 51–100 ks 1,9×; 101+ ks 1,7×.
 - Zaškrtnutie „Zložitá zákazka“ pridá k automatickému násobku +0,3×.
@@ -35,7 +36,7 @@ AKO SA KALKULAČKA POČÍTA
 - Desatinné čísla sa dajú písať s čiarkou aj bodkou. Prázdne povinné pole je chyba, nie nula.
 
 PRIDANIE NA PLOCHU MOBILU
-Otvor adresu kalkulačky v Safari/Chrome → Zdieľať / menu → Pridať na plochu. Rozpracované hodnoty sa ukladajú len v tomto prehliadači (localStorage), takže po zatvorení appky nezmiznú. Tlačidlo „Predvolené“ ich vráti.
+Otvor adresu kalkulačky v Safari/Chrome → Zdieľať / menu → Pridať na plochu. Rozpracované hodnoty sa ukladajú len v tomto prehliadači (localStorage), takže po zatvorení appky nezmiznú. Tlačidlo „Nová zákazka“ vymaže polia; predvolené ostanú len príkon 120 W, elektrina 0,20 €/kWh, yield 95 % a hodinovka 10 €/h.
 
 EXPORT PRE ZÁKAZNÍKA
 Tlačidlo „Export pre zákazníka · PDF“ otvorí dialóg tlače prehliadača. Vyber „Uložiť ako PDF“. Zákaznícky výstup zobrazuje dátum, počet kusov, celkový čas tlače, gramy filamentu, modelovanie + úpravy, balenie a príplatok/zľavu (nulové riadky sa skryjú), celkovú cenu a cenu za kus. Interné náklady a násobky sa zákazníkovi nezobrazujú.
@@ -44,5 +45,5 @@ SÚKROMIE
 Výpočty prebiehajú v prehliadači. Kalkulačka neposiela vstupy ani zákazkové údaje na server a neukladá ich do databázy.
 
 KONTROLNÝ PRÍKLAD
-Predvolené hodnoty (10 ks, 1200 min, 10,6 g/ks, 12 €/kg, 120 W, 0,20 €/kWh, yield 85 %, násobok 2,5×):
-výroba po násobku = 5,15294 € → 5,15 €, opotrebenie 20 h × 0,10 € = 2,00 €, spolu 7,15 €.
+10 ks × 120 min/ks (= 20 h), 10,6 g/ks, 12 €/kg, 120 W, 0,20 €/kWh, yield 95 %, automatický násobok 2,5×:
+materiál 1,272 € + elektrina 0,48 € = 1,752 € / 0,95 = 1,8442 € × 2,5 = 4,61 €, opotrebenie 20 h × 0,10 € = 2,00 €, spolu 6,61 €.
