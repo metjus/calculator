@@ -311,6 +311,7 @@ a{color:inherit;text-decoration:none}
     <div class="r"><span>Opotrebenie tlačiarne</span><strong id="wearOut">–</strong></div>
     <div class="r"><span>Balenie</span><strong id="packingOut">–</strong></div>
     <div class="r"><span id="adjustLbl">Príplatok / zľava</span><strong id="adjustOut">–</strong></div>
+    <div class="r"><span>Zaokrúhlenie nahor</span><strong id="roundOut">–</strong></div>
     <div class="r emph"><span>Spolu za objednávku</span><strong id="total2">–</strong></div>
     <div class="r sub"><span>z toho marža na výrobe</span><strong id="profit">–</strong></div>
   </div>
@@ -376,6 +377,8 @@ const nf2=new Intl.NumberFormat('sk-SK',{maximumFractionDigits:2});
 const nfEur=new Intl.NumberFormat('sk-SK',{style:'currency',currency:'EUR'});
 // Zaokrúhlenie na centy "polovica nahor" bez chýb binárnych desatinných čísel (1.005 → 1.01).
 function roundCent(n){const s=n<0?-1:1;return s*Math.round(Number((Math.abs(n)*100).toPrecision(12)))/100}
+// Predajné ceny nahor na celé eurá (13,11 € → 14 €).
+const ceilEur=n=>Math.ceil(roundCent(n));
 const fmt=n=>nfEur.format(roundCent(n)+0);
 const num=n=>nf2.format(n);
 // Akceptuje "10,6", "10.6", " 1 200 " → číslo; prázdne → null; nezmysel → NaN.
@@ -388,7 +391,7 @@ function autoMult(q,complex){const base=q<=5?3:q<=20?2.5:q<=50?2.2:q<=100?1.9:1.
 function fmtTime(min){const m=Math.round(min);return Math.floor(m/60)+' h '+String(m%60).padStart(2,'0')+' min'}
 function setText(id,v){$(id).textContent=v}
 let discount=false;
-const OUT=['total','total2','per','totalGrams','time','material','power','yielded','production','labor','wearOut','packingOut','adjustOut','profit','barTotal','barPer'];
+const OUT=['roundOut','total','total2','per','totalGrams','time','material','power','yielded','production','labor','wearOut','packingOut','adjustOut','profit','barTotal','barPer'];
 
 function read(){
   const v={},bad=[],empty=[];
@@ -438,10 +441,13 @@ function calc(){
         yielded=raw/(v.yield/100),
         mult=auto?autoMult(v.qty,$('complexity').checked):v.multiplier,
         production=yielded*mult,
-        labor=(v.modelMinutes/60)*v.hourly,
+        laborRaw=(v.modelMinutes/60)*v.hourly,
+        labor=ceilEur(laborRaw),
         wear=hours*WEAR_PER_HOUR;
-    total=production+labor+wear+v.packing+adj;
-    if(roundCent(total)<0)errors.push('Výsledná cena je záporná. Zníž zľavu alebo uprav vstupy.');
+    var totalRaw=production+labor+wear+v.packing+adj;
+    total=ceilEur(totalRaw);
+    var rounding=total-totalRaw;
+    if(roundCent(totalRaw)<0)errors.push('Výsledná cena je záporná. Zníž zľavu alebo uprav vstupy.');
     if(!auto&&v.multiplier<1)warns.push('Násobok pod 1× znamená predaj výroby pod nákladmi.');
     if(totalMin===0)warns.push('Čas tlače je 0 – elektrina a opotrebenie sa nezapočítajú.');
   }
@@ -466,7 +472,7 @@ function calc(){
   setText('barTotal',fmt(total));setText('barPer',per);
   setText('totalGrams',num(v.qty*v.grams)+' g');setText('time',fmtTime(totalMin));
   setText('material',fmt(material));setText('power',fmt(power));setText('yielded',fmt(yielded));
-  setText('production',fmt(production));setText('labor',fmt(labor));setText('wearOut',fmt(wear));
+  setText('production',fmt(production));setText('labor',fmt(labor));setText('wearOut',fmt(wear));setText('roundOut','+'+fmt(rounding));
   setText('packingOut',fmt(v.packing));
   setText('adjustLbl',adj<0?'Zľava':adj>0?'Príplatok':'Príplatok / zľava');setText('adjustOut',(adj>0?'+':'')+fmt(adj));
   setText('profit',fmt(margin));
@@ -502,6 +508,7 @@ function calc(){
     'Opotrebenie tlačiarne: '+fmt(wear),
     'Balenie: '+fmt(v.packing),
     (adj<0?'Zľava: ':'Príplatok: ')+fmt(adj),
+    'Zaokrúhlenie: +'+fmt(rounding),
     'CELKOM: '+fmt(total),
     'Cena za kus: '+fmt(total/v.qty),
   ].join('\n');

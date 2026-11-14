@@ -32,7 +32,7 @@ AKO SA KALKULAČKA POČÍTA
 - Modelovanie + úpravy sa zadávajú v minútach a účtujú sa podľa hodinovky.
 - Opotrebenie tlačiarne je automaticky 0,10 € za hodinu tlače.
 - Balenie a dodatočná úprava ceny sa pripočítajú samostatne. Príplatok/zľava sa volí prepínačom, suma je vždy kladná.
-- Zaokrúhľuje sa na centy matematicky (polovica nahor), aj pri hodnotách typu 1,005 €.
+- Modelovanie + úpravy aj celková cena sa zaokrúhľujú NAHOR na celé eurá (13,11 € → 14 €). Rozdiel ukazuje riadok „Zaokrúhlenie nahor“. Medzivýpočty sa zobrazujú v centoch.
 - Desatinné čísla sa dajú písať s čiarkou aj bodkou. Prázdne povinné pole je chyba, nie nula.
 
 PRIDANIE NA PLOCHU MOBILU
@@ -46,4 +46,4 @@ Výpočty prebiehajú v prehliadači. Kalkulačka neposiela vstupy ani zákazkov
 
 KONTROLNÝ PRÍKLAD
 10 ks × 120 min/ks (= 20 h), 10,6 g/ks, 12 €/kg, 120 W, 0,20 €/kWh, yield 95 %, automatický násobok 2,5×:
-materiál 1,272 € + elektrina 0,48 € = 1,752 € / 0,95 = 1,8442 € × 2,5 = 4,61 €, opotrebenie 20 h × 0,10 € = 2,00 €, spolu 6,61 €.
+materiál 1,272 € + elektrina 0,48 € = 1,752 € / 0,95 = 1,8442 € × 2,5 = 4,61 €, opotrebenie 20 h × 0,10 € = 2,00 €, spolu 6,61 € → zaokrúhlené nahor 7 €.
