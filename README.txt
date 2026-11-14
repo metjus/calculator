@@ -1,4 +1,4 @@
-MEOWPRINT – WEBOVÁ KALKULAČKA PRE CLOUDFLARE WORKERS
+MEOWPRINT KALKULAČKA – WEBOVÁ APPKA PRE CLOUDFLARE WORKERS
 
 OBSAH BALÍKA
 - public/index.html   Samotná kalkulačka (HTML + CSS + JS v jednom súbore)
@@ -20,6 +20,13 @@ NAJRÝCHLEJŠIE NASADENIE CEZ WRANGLER
 
 PRIPOJENIE VLASTNEJ DOMÉNY
 V Cloudflare Dashboard otvor Workers & Pages → calculator → Settings → Domains & Routes a pridaj doménu alebo subdoménu. DNS a doména musia byť v danom Cloudflare účte.
+
+POLOŽKY
+- Jedna cenová ponuka môže mať viac položiek (tlačidlo „+ Pridať ďalšiu položku“). Každá má vlastný názov, materiál (výber), farbu, počet kusov, čas tlače, filament, cenu filamentu, čas práce a náročnosť.
+- Príkon, elektrina, hodinovka, yield, balenie, príplatok/zľava a manuálny násobok platia pre celú ponuku.
+- Automatický násobok sa počíta pre každú položku zvlášť podľa jej počtu kusov.
+- Cena každej položky sa zaokrúhli nahor na celé eurá; súčet + balenie ± úprava sa znova zaokrúhli nahor.
+- Cena filamentu sa pamätá pre každý materiál a pri jeho výbere sa predvyplní.
 
 AKO SA KALKULAČKA POČÍTA
 - Materiál = počet kusov × gramy na kus × €/kg / 1000.
