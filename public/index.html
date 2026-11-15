@@ -197,41 +197,44 @@ a{color:inherit;text-decoration:none}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 /* ---------- PDF pre zákazníka ---------- */
+/* PDF sa generuje priamo v kalkulačke (html2canvas + jsPDF), takže v ňom nie je hlavička ani päta prehliadača s odkazom. */
+.customer-quote{padding:16mm;box-sizing:border-box;font-family:var(--sans);color:#0A0A0B;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.customer-quote.rendering{display:block;position:fixed;left:-10000px;top:0;width:794px;min-height:1123px}
+.q-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid #0A0A0B}
+.q-brand{display:flex;align-items:center;gap:10px}
+.q-brand .wm{font-size:22px;color:#0A0A0B}
+.q-doc{text-align:right}
+.q-doctitle{font-size:20px;font-weight:600;letter-spacing:-.02em;color:#0A0A0B}
+.q-docno{margin-top:2px;font:500 11px var(--mono);letter-spacing:.06em;color:#55534F}
+.q-k{display:block;font:500 9.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#807E79;margin-bottom:5px}
+.q-parties{display:flex;justify-content:space-between;gap:24px;margin-top:24px;font-size:12px;line-height:1.6;color:#2A2A2D}
+.q-v b{font-weight:600;color:#0A0A0B}
+.q-meta{display:grid;gap:12px;text-align:right;align-content:start}
+.q-meta span:not(.q-k){font-size:12.5px;color:#0A0A0B}
+.q-subject{margin-top:26px;padding:14px 16px;border-left:3px solid #FF5A1F;background:#F6F5F2}
+.q-name{font-size:17px;font-weight:600;letter-spacing:-.01em;color:#0A0A0B;line-height:1.35}
+.q-table{width:100%;margin-top:24px;border-collapse:collapse;font-size:13px}
+.q-table th{padding:0 0 8px;text-align:left;font:500 9.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#807E79;border-bottom:1px solid #0A0A0B}
+.q-table th:last-child,.q-table td:last-child{text-align:right}
+.q-table td{padding:11px 0;border-bottom:1px solid #E2E0DA;color:#2A2A2D;font-variant-numeric:tabular-nums}
+.q-table td:last-child{color:#0A0A0B;font-weight:500;white-space:nowrap}
+.q-table th:nth-child(2),.q-table td:nth-child(2){text-align:right;padding-right:18px;white-space:nowrap}
+.q-table td{vertical-align:top}
+.q-it b{display:block;font-weight:600;color:#0A0A0B}
+.q-it small{display:block;margin-top:2px;color:#807E79;font-size:11px;line-height:1.45}
+.q-table tr[hidden]{display:none!important}
+.q-total{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding:18px 20px;border-radius:14px;background:#0A0A0B;color:#F3F2EE;break-inside:avoid}
+.q-total span{font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#C9C7C1}
+.q-total strong{font-size:30px;font-weight:600;letter-spacing:-.04em;color:#FF5A1F}
+.q-per{margin-top:8px;text-align:right;color:#55534F;font-size:12px}
+.q-foot{margin-top:36px;padding-top:12px;border-top:1px solid #E2E0DA;color:#807E79;font-size:10.5px;line-height:1.6}
+.q-foot p{margin:0 0 3px}
 @media print{
-  @page{size:A4;margin:0} /* bez okrajov prehliadač netlačí hlavičku/pätu s odkazom */
+  @page{size:A4;margin:0} /* záloha: bez okrajov prehliadač netlačí hlavičku/pätu s odkazom */
   html,body{background:#fff!important;color:#0A0A0B!important}
   .nav,.wrap>.head,.layout,.foot,.bar{display:none!important}
   .wrap{max-width:none;padding:0}
-  .customer-quote{display:block!important;padding:16mm;box-sizing:border-box;font-family:var(--sans);color:#0A0A0B;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .q-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid #0A0A0B}
-  .q-brand{display:flex;align-items:center;gap:10px}
-  .q-brand .wm{font-size:22px;color:#0A0A0B}
-  .q-doc{text-align:right}
-  .q-doctitle{font-size:20px;font-weight:600;letter-spacing:-.02em;color:#0A0A0B}
-  .q-docno{margin-top:2px;font:500 11px var(--mono);letter-spacing:.06em;color:#55534F}
-  .q-k{display:block;font:500 9.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#807E79;margin-bottom:5px}
-  .q-parties{display:flex;justify-content:space-between;gap:24px;margin-top:24px;font-size:12px;line-height:1.6;color:#2A2A2D}
-  .q-v b{font-weight:600;color:#0A0A0B}
-  .q-meta{display:grid;gap:12px;text-align:right;align-content:start}
-  .q-meta span:not(.q-k){font-size:12.5px;color:#0A0A0B}
-  .q-subject{margin-top:26px;padding:14px 16px;border-left:3px solid #FF5A1F;background:#F6F5F2}
-  .q-name{font-size:17px;font-weight:600;letter-spacing:-.01em;color:#0A0A0B;line-height:1.35}
-  .q-table{width:100%;margin-top:24px;border-collapse:collapse;font-size:13px}
-  .q-table th{padding:0 0 8px;text-align:left;font:500 9.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:#807E79;border-bottom:1px solid #0A0A0B}
-  .q-table th:last-child,.q-table td:last-child{text-align:right}
-  .q-table td{padding:11px 0;border-bottom:1px solid #E2E0DA;color:#2A2A2D;font-variant-numeric:tabular-nums}
-  .q-table td:last-child{color:#0A0A0B;font-weight:500;white-space:nowrap}
-  .q-table th:nth-child(2),.q-table td:nth-child(2){text-align:right;padding-right:18px;white-space:nowrap}
-  .q-table td{vertical-align:top}
-  .q-it b{display:block;font-weight:600;color:#0A0A0B}
-  .q-it small{display:block;margin-top:2px;color:#807E79;font-size:11px;line-height:1.45}
-  .q-table tr[hidden]{display:none!important}
-  .q-total{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding:18px 20px;border-radius:14px;background:#0A0A0B;color:#F3F2EE;break-inside:avoid}
-  .q-total span{font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#C9C7C1}
-  .q-total strong{font-size:30px;font-weight:600;letter-spacing:-.04em;color:#FF5A1F}
-  .q-per{margin-top:8px;text-align:right;color:#55534F;font-size:12px}
-  .q-foot{margin-top:36px;padding-top:12px;border-top:1px solid #E2E0DA;color:#807E79;font-size:10.5px;line-height:1.6}
-  .q-foot p{margin:0 0 3px}
+  .customer-quote{display:block!important}
 }
 </style>
 </head>
@@ -359,11 +362,11 @@ a{color:inherit;text-decoration:none}
 
 <section id="customerQuote" class="customer-quote" aria-hidden="true">
   <header class="q-head">
-    <div class="q-brand"><svg viewBox="0 0 100 124" width="22" height="27" aria-hidden="true"><use href="#mpLogo" fill="#0A0A0B"></use></svg><span class="wm">meowprint</span></div>
+    <div class="q-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 124" width="22" height="27" aria-hidden="true"><path fill="#0A0A0B" d="M15.19 1.04 L15.02 12.12 L0.64 27.36 L14.15 39.66 L7.92 60.44 L18.31 80.01 L15.19 112.74 L6.18 123.83 L27.31 123.83 L29.39 98.89 L22.81 120.54 L12.59 120.54 L20.21 115.34 L24.54 78.28 L14.5 59.58 L20.91 35.5 L4.97 28.06 L23.68 9.7 L33.89 20.78 L36.15 41.39 L62.3 64.08 L75.28 105.47 L89.14 82.78 L76.67 55.77 L91.74 41.04 L81.87 56.28 L94.34 82.61 L69.4 120.71 L36.66 120.71 L44.11 115.17 L35.45 88.84 L39.09 81.57 L52.77 83.47 L35.8 75.68 L29.22 88.67 L38.22 113.09 L30.95 124 L74.94 123.83 L99.36 82.78 L87.41 56.63 L96.41 37.75 L82.56 36.89 L71.65 55.77 L83.42 82.26 L78.06 92.65 L68.18 61.48 L42.21 38.79 L39.44 18.18 L23.5 0 L22.29 6.93ZM12.25 22.5 L12.42 22.34 L17.44 22.34 L17.44 22.51 L13.46 25.63 L12.42 25.63Z"></path></svg><span class="wm">meowprint</span></div>
     <div class="q-doc"><div class="q-doctitle">Cenová ponuka</div><div class="q-docno" id="qNo">–</div></div>
   </header>
   <div class="q-parties">
-    <div><div class="q-k">Dodávateľ</div><div class="q-v"><b>Matúš Šturdík – meowprint</b><br>Nová 407, 925 32 Veľká Mača<br>IČO: 51628163<br>info@meowprint.sk · 0940 838 947</div></div>
+    <div><div class="q-k">Dodávateľ</div><div class="q-v"><b>Matúš Šturdík – meowprint</b><br>Nová 407, 925 32 Veľká Mača<br>IČO: 51628163<br>info@meowprint.sk · 0940 838 947<br>meowprint.sk</div></div>
     <div class="q-meta">
       <div><span class="q-k">Dátum vystavenia</span><span id="qDate">–</span></div>
       <div><span class="q-k">Platnosť ponuky</span><span id="qValid">–</span></div>
@@ -651,7 +654,57 @@ $('delItem').addEventListener('click',()=>{
 });
 $('reset').addEventListener('click',()=>{if(!confirm('Začať novú zákazku? Všetky položky sa vymažú (elektrina, príkon, yield a hodinovka ostanú predvolené).'))return;applyOrder(ORDER_DEFAULTS);items=[newItem()];cur=0;showItem();calc()});
 $('copy').addEventListener('click',async()=>{if(!calc())return;const b=$('copy');try{await navigator.clipboard.writeText(window.lastSummary);b.textContent='Skopírované'}catch(e){b.textContent='Schránka nedostupná'}setTimeout(()=>b.textContent='Kopírovať súhrn',1500)});
-$('export').addEventListener('click',()=>{if(calc())window.print()});
+// ---------- PDF pre zákazníka ----------
+// PDF sa vytvorí priamo tu, nie cez tlač prehliadača, aby v ňom nebola hlavička/päta s adresou kalkulačky.
+const EXPORT_LABEL=$('export').textContent;
+let pdfBusy=false,readyPdf=null;
+function loadScript(src){return new Promise((ok,fail)=>{if(document.querySelector('script[src="'+src+'"]'))return ok();const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=fail;document.head.appendChild(s)})}
+function pdfName(){const n=$('qName').textContent.trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,' ').slice(0,60);return 'Cenova ponuka - '+(n||'meowprint')+'.pdf'}
+async function buildPdf(){
+  await Promise.all([loadScript('/vendor/html2canvas.min.js'),loadScript('/vendor/jspdf.umd.min.js')]);
+  if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+  const q=$('customerQuote');q.classList.add('rendering');
+  let canvas;
+  try{canvas=await html2canvas(q,{scale:3,backgroundColor:'#ffffff',logging:false,windowWidth:794,scrollX:0,scrollY:0})}
+  finally{q.classList.remove('rendering')}
+  const pdf=new window.jspdf.jsPDF({unit:'mm',format:'a4',compress:true});
+  const pageH=Math.round(canvas.width*297/210);
+  for(let y=0,page=0;y<canvas.height;y+=pageH,page++){
+    const h=Math.min(pageH,canvas.height-y),c=document.createElement('canvas');
+    c.width=canvas.width;c.height=h;
+    const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,h);ctx.drawImage(canvas,0,-y);
+    if(page)pdf.addPage();
+    pdf.addImage(c.toDataURL('image/jpeg',0.92),'JPEG',0,0,210,h*210/canvas.width);
+  }
+  pdf.setProperties({title:$('qName').textContent.trim()||'Cenová ponuka',author:'meowprint',creator:'meowprint'});
+  const name=pdfName();
+  return new File([pdf.output('blob')],name,{type:'application/pdf'});
+}
+function downloadPdf(file){const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download=file.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+async function sharePdf(file){
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file],title:file.name});return true}
+    catch(e){if(e.name==='AbortError')return true;if(e.name==='NotAllowedError')return false}
+  }
+  downloadPdf(file);return true;
+}
+function resetExport(){readyPdf=null;if(!pdfBusy)$('export').textContent=EXPORT_LABEL}
+$('export').addEventListener('click',async()=>{
+  if(pdfBusy)return;
+  if(readyPdf){const f=readyPdf;resetExport();await sharePdf(f);return}
+  if(!calc())return;
+  const b=$('export');pdfBusy=true;b.textContent='Pripravujem PDF…';
+  try{
+    const file=await buildPdf();
+    pdfBusy=false;b.textContent=EXPORT_LABEL;
+    // Safari povolí zdieľanie len hneď po ťuknutí; ak to po príprave PDF nedovolí, stačí ťuknúť znova.
+    if(!await sharePdf(file)){readyPdf=file;b.textContent='PDF je pripravené · Uložiť / zdieľať'}
+  }catch(e){
+    console.error(e);pdfBusy=false;b.textContent=EXPORT_LABEL;
+    window.print(); // záloha, keby sa PDF nepodarilo vytvoriť
+  }
+});
+document.addEventListener('input',resetExport);document.addEventListener('change',resetExport);
 $('barBtn').addEventListener('click',e=>{e.preventDefault();$('result').scrollIntoView({behavior:'smooth',block:'start'})});
 
 // Spodná lišta: skry, keď je výsledok na obrazovke; nech nezakrýva posledné polia.
